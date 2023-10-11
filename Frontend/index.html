@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Portfolio</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #000;
+            color: #00ff00;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        button {
+            background-color: #333;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        pre {
+            background-color: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            overflow: auto;
+            max-height: 400px;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        .json-key {
+            color: green; /* Color for keys */
+        }
+
+        .json-value {
+            color: lightgreen; /* Color for values */
+        }
+    </style>
+</head>
+<body>
+    <h1>API Portfolio</h1>
+    <button id="about-me">About Me</button>
+    <button id="certificates">Certificates</button>
+    <button id="education">Education</button>
+    <button id="skills">Skills</button>
+    <pre id="jsonOutput"></pre>
+
+    <script>
+        document.getElementById("about-me").addEventListener("click", function () {
+            // Replace with the URL of your AboutMeController endpoint
+            const apiUrl = "http://localhost:8080/about-me/";
+
+            fetch(apiUrl, {
+                method: 'GET',
+                mode: 'cors', // Handle CORS
+                credentials: 'include', // Include credentials if needed (e.g., cookies)
+                headers: {
+                    'Accept': 'application/json',
+                    // Add any other headers as needed
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const jsonData = JSON.stringify(data, null, 2);
+
+                    // Style the keys and values
+                    const styledJson = syntaxHighlight(jsonData);
+                    document.getElementById("jsonOutput").innerHTML = styledJson;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        });
+
+        document.getElementById("certificates").addEventListener("click", function () {
+            // Replace with the URL of your AboutMeController endpoint
+            const apiUrl = "http://localhost:8080/certificates";
+
+            fetch(apiUrl, {
+                method: 'GET',
+                mode: 'cors', // Handle CORS
+                credentials: 'include', // Include credentials if needed (e.g., cookies)
+                headers: {
+                    'Accept': 'application/json',
+                    // Add any other headers as needed
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const jsonData = JSON.stringify(data, null, 2);
+
+                    // Style the keys and values
+                    const styledJson = syntaxHighlight(jsonData);
+                    document.getElementById("jsonOutput").innerHTML = styledJson;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        });
+
+        document.getElementById("education").addEventListener("click", function () {
+            // Replace with the URL of your AboutMeController endpoint
+            const apiUrl = "http://localhost:8080/education";
+
+            fetch(apiUrl, {
+                method: 'GET',
+                mode: 'cors', // Handle CORS
+                credentials: 'include', // Include credentials if needed (e.g., cookies)
+                headers: {
+                    'Accept': 'application/json',
+                    // Add any other headers as needed
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const jsonData = JSON.stringify(data, null, 2);
+
+                    // Style the keys and values
+                    const styledJson = syntaxHighlight(jsonData);
+                    document.getElementById("jsonOutput").innerHTML = styledJson;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        });
+
+        document.getElementById("skills").addEventListener("click", function () {
+            // Replace with the URL of your AboutMeController endpoint
+            const apiUrl = "http://localhost:8080/skills";
+
+            fetch(apiUrl, {
+                method: 'GET',
+                mode: 'cors', // Handle CORS
+                credentials: 'include', // Include credentials if needed (e.g., cookies)
+                headers: {
+                    'Accept': 'application/json',
+                    // Add any other headers as needed
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const jsonData = JSON.stringify(data, null, 2);
+
+                    // Style the keys and values
+                    const styledJson = syntaxHighlight(jsonData);
+                    document.getElementById("jsonOutput").innerHTML = styledJson;
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        });
+
+        // Function to syntax-highlight JSON
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-f0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(\.\d*)?([eE][+\-]?\d+)?)/g, function (match) {
+                var cls = 'json-value';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-value';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-value';
+                } else if (/null/.test(match)) {
+                    cls = 'json-value';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+</body>
+</html>
